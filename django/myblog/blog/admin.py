@@ -8,13 +8,7 @@ from .models import User, Author, Category, Article, Comment
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('name', 'profile')
-
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ()
-
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'profile')
+    list_display = ('name')
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'Author', 'category', 'created_time')
