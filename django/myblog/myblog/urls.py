@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 """myblog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -20,7 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
-=======
+
 """myblog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -43,4 +42,3 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include('blog.urls')),
 ]
->>>>>>> 1b5e7a883400ace46340ae9fbbd6a1fe6d1c7b60

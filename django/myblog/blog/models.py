@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.db import models
-
-# Create your models here.
-=======
 from django.db import models
 
 
@@ -69,5 +64,3 @@ class Poll(models.Model):
     user = models.ForeignKey(User, null=True)
     article = models.ForeignKey(Article, null=True)
     comment = models.ForeignKey(Comment, null=True)
-# Create your models here.
->>>>>>> 1b5e7a883400ace46340ae9fbbd6a1fe6d1c7b60
