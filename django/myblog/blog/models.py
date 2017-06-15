@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # 用户
 class User(models.Model):
     name = models.CharField(max_length=30)  # 用户姓名
@@ -23,7 +22,6 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=30)  # 分类名称
     profile = models.CharField(max_length=250)  # 分类介绍
-
 
     def __str__(self):
         return self.name
@@ -53,7 +51,6 @@ class Comment(models.Model):
     user = models.ForeignKey(User)
     parent_comment = models.ForeignKey('Comment')
     article = models.ForeignKey(Article)
-
 
     def __str__(self):
         return self.content
