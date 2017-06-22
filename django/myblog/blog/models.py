@@ -1,5 +1,27 @@
 from django.db import models
 
+# Article模型的管理器
+class ArticleManager(models.Manager):
+    def query_by_column(self, column_id):
+        query = self.get_queryset().filter(column_id=column_id)
+
+    def query_by_user(self, user_id):
+        user = User.objects.get(id=user_id)
+        article_list = user.article_set.all()
+        return article_list
+
+    def query_by_polls(self):
+        query = self.get_queryset().order_by('poll_num')
+        return query
+
+    def query_by_time(self):
+        query = self.get_queryset().order_by('-pub_date')
+        return query
+
+    def query_by_keyword(self, keyword):
+        query = self.get_queryset().filter(title__contains=keyword)
+        return query
+
 
 # 用户
 class User(models.Model):
@@ -36,6 +58,7 @@ class Article(models.Model):
     modified_time = models.DateTimeField(auto_now=True)  # 文章修改时间
     Author = models.ForeignKey(Author)  # 文章作者
     category = models.ForeignKey(Category)  # 文章的分类
+    objects = ArticleManager()
 
     def __str__(self):
         return self.title
@@ -63,7 +86,5 @@ class Poll(models.Model):
     user = models.ForeignKey(User, null=True)
     article = models.ForeignKey(Article, null=True)
     comment = models.ForeignKey(Comment, null=True)
-<<<<<<< HEAD
 # Create your models here.
-=======
->>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d
+
