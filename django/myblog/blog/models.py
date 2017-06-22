@@ -15,7 +15,7 @@ class ArticleManager(models.Manager):
         return query
 
     def query_by_time(self):
-        query = self.get_queryset().order_by('-pub_date')
+        query = self.get_queryset().order_by('-created_time')
         return query
 
     def query_by_keyword(self, keyword):
@@ -57,24 +57,31 @@ class Article(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)  # 文章创建时间
     modified_time = models.DateTimeField(auto_now=True)  # 文章修改时间
     Author = models.ForeignKey(Author)  # 文章作者
+    user = models.ManyToManyField(User, blank=True)
+    poll_num = models.IntegerField(default=0)
+    comment_num = models.IntegerField(default=0)
     category = models.ForeignKey(Category)  # 文章的分类
-    objects = ArticleManager()
+
+
 
     def __str__(self):
         return self.title
 
     class Meta:
-        ordering = ['created_time']
+        verbose_name = 'article'
+        verbose_name_plural = 'article'
+
+    objects = ArticleManager()
 
 
 # 评论
 class Comment(models.Model):
     content = models.TextField()  # 评论内容
     created_time = models.DateTimeField(auto_now_add=True)  # 评论时间
-    poll_number = models.IntegerField(default=0)  # 点赞次数
+    poll_num = models.IntegerField(default=0)  # 点赞次数
     user = models.ForeignKey(User)
     parent_comment = models.ForeignKey('Comment')
-    article = models.ForeignKey(Article)
+    article = models.ForeignKey(Article, null=True)
 
 
     def __str__(self):
