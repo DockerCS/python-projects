@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.db import models
-
-# Create your models here.
-=======
 from django.db import models
 
 
@@ -28,7 +23,6 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=30)  # 分类名称
     profile = models.CharField(max_length=250)  # 分类介绍
-
 
     def __str__(self):
         return self.name
@@ -70,4 +64,3 @@ class Poll(models.Model):
     article = models.ForeignKey(Article, null=True)
     comment = models.ForeignKey(Comment, null=True)
 # Create your models here.
->>>>>>> 1b5e7a883400ace46340ae9fbbd6a1fe6d1c7b60
