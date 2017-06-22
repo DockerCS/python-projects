@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-from django.contrib import admin
-
-=======
->>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d
 from django.contrib import admin
 from .models import User, Author, Category, Article, Comment
 
@@ -20,7 +15,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'Author', 'category', 'created_time')
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user_id', 'article_id', 'parent_comment', 'created_time', 'content', 'poll_number')
+    list_display = ('user_id', 'article_id', 'parent_comment', 'created_time', 'content', 'poll_num')
 
 
 
