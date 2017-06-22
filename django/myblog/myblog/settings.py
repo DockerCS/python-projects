@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d
 """
 Django settings for myblog project.
 
@@ -122,4 +126,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+<<<<<<< HEAD
 STATIC_URL = '/static/'
+=======
+STATIC_URL = '/static/'
+>>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d

@@ -63,4 +63,7 @@ class Poll(models.Model):
     user = models.ForeignKey(User, null=True)
     article = models.ForeignKey(Article, null=True)
     comment = models.ForeignKey(Comment, null=True)
+<<<<<<< HEAD
 # Create your models here.
+=======
+>>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d

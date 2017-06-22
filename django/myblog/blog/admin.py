@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 from django.contrib import admin
 
+=======
+>>>>>>> c232d70b517593d8ad10eb221e7f75c29429539d
 from django.contrib import admin
 from .models import User, Author, Category, Article, Comment
 
