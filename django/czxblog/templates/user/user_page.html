@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>夕象 | 陈志祥的个人博客</title>
+
+    <!-- Bootstrap 4 CSS. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+      
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="css/custom.css" rel="stylesheet">
+    
+    <!-- For icons -->
+    <link href="css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
+            &#9776;
+        </button>
+        <a class="navbar-brand" href="/">陈志祥的个人博客</a>
+        <div class="collapse navbar-toggleable-sm" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Engage</a>
+                        <a class="dropdown-item" href="#">Pontificate</a>
+                        <a class="dropdown-item" href="#">Synergize</a>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Search -->
+            <form class="form-inline pull-xs-right">
+                <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
+                <button class="btn btn-secondary" type="submit">搜索</button>
+            </form>
+
+			<ul id="user_part" class="nav navbar-nav navbar-right">
+                <li>
+					<a href="/user/user_page" class="nav-link">登录</a>
+				</li>
+			</ul>
+
+        </div>
+    </nav>
+
+	<div class="container">
+		<div class="head_text">
+			<h2 class="text-info">欢迎登录</h2>
+			<small>让我们一起分享你的知识、经验和见解</small>
+		</div>
+		<form id="user_form" class="main_form" method='post'>
+			{%csrf_token%}
+			<input id="reback_url" type="hidden" value="{{reback_url}}">
+			<div id="user_control">
+				<div class="control-group">
+					<label class="control-label" for="user_name">邮箱：</label>
+					<input type="text" id="user_name" class="input-xlarge" name="user_name" placeholder="请输入邮箱" autocomplete="off">
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="user_pwd">密码：</label>
+					<input type="password" id="user_pwd" class="input-xlarge" name="user_pwd" placeholder="请输入密码" autocomplete="off">
+				</div>
+			</div>
+
+            <div class="account_list">
+				<span class="other_account">第三方账号登录：</span>
+				<a href="/oauth/qq_login?state={{reback_url}}" title="QQ登录">
+					<img src="/static/img/logo_qq.png" alt="QQ登录">
+				</a>
+				<a href="/oauth/sina_login?state={{reback_url}}" title="微博登录">
+					<img src="/static/img/logo_sina.png" alt="微博登录">
+				</a>
+				<a href="/oauth/github_login?state={{reback_url}}" title="Github登录">
+					<img src="/static/img/logo_github.png" alt="Github登录">
+				</a>
+			</div>
+
+			<p id="tip_text" style="color:red;"></p>
+			<div class="form_buttons">
+				<p>我是老用户：</p>
+				<input type="submit" class="btn btn-primary" value="登录"/>
+				<a class="btn btn-default" href="{% url 'password_lost' %}">忘记密码</a>
+			</div>
+			<div class="form_buttons" style="margin-left:1.5em;">
+				<p>我是新用户：</p>
+				<input id="user_register" type="button" class="btn btn-primary" value="注册"/>
+			</div>
+		</form>
+	</div>
+
+    <script type="text/javascript">
+        $(function(){
+            //登录
+            $('#user_form').submit(function(){
+                //验证
+                var tip=$('#tip_text');
+                tip.text('');
+
+                if($('#user_name').val()==''){
+                    tip.text('请输入邮箱');
+                    return false;
+                };
+                if($('#user_pwd').val()==''){
+                    tip.text('请输入密码');
+                    return false;
+                };
+
+                //登录
+                $.ajax({
+                    type: "POST",
+                    data: $('#user_form').serialize(),
+                    url: "{% url 'user_login' %}",
+                    cache: false,
+                    dataType: "json",
+                    success: function(json, textStatus){
+                        var is_success = json['success'];
+                        if(is_success){
+                            tip.text('登录成功，页面处理中...');
+
+                            //跳转回原来的页面
+                            var reback_url = $('#reback_url').val();
+                            if(!reback_url){reback_url='/';}
+                            window.location.href = reback_url;
+                        }else{
+                            tip.text('邮箱或者密码错误，请重试');
+                        };
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        tip.text("登录出错，请重试 "+errorThrown);
+                    }
+                });
+                return false;
+            });
+
+            //注册
+            $('#user_register').click(function(){
+                //验证
+                var tip=$('#tip_text');
+                tip.text('');
+
+                var reg_name=$('#user_name').val();
+                var reg_pwd=$('#user_pwd').val();
+
+                if(reg_name==''){
+                    tip.text('邮箱不能为空');
+                    return false;
+                };
+                if(!reg_name.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)){
+                    tip.text('请输入正确的邮箱格式');
+                    return false;
+                }
+
+                if(reg_pwd==''){
+                    tip.text('密码不能为空');
+                    return false;
+                };
+                if(reg_pwd.length<6){
+                    tip.text('密码不能少于6位');
+                }
+
+                //注册
+                tip.text('注册中，请稍后...');
+                $.ajax({
+                    type: "POST",
+                    data: $('#user_form').serialize(),
+                    url: "{% url 'user_register' %}",
+                    cache: false,
+                    dataType: "json",
+                    success: function(json, textStatus){
+                        var is_success = json['success'];
+                        if(is_success){
+                            tip.text('注册成功，页面处理中...');
+                            $('#user_control').text(json['message']);
+
+                            window.setTimeout(function(){
+                                var reback_url = $('#reback_url').val();
+                                if(!reback_url){reback_url='/';}
+                                window.location.href = reback_url;
+                            },3000);
+                        }else{
+                            tip.text(json['message']);
+                        };
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        tip.text("注册出错，请重试 "+errorThrown);
+                    }
+                });
+                return false;
+            });
+        });
+	</script>
+    <style type="text/css">
+        .head_text{
+            text-align: center;
+            margin: 2em auto;
+        }
+        .main_form{
+            margin: 0 auto;
+            width: 300px;
+            border: 2px #aaa dashed;
+            padding: 1.5em 0em 0em 1.5em;
+        }
+        .main_form a{
+            text-decoration: none;
+        }
+        .other_account{
+            font-weight: bolder;
+        }
+        .account_list{
+            margin-top: 0.5em;
+        }
+        .form_buttons{
+            margin-top: 2em;
+            float: left;
+        }
+    </style>
+
+</body>
+
+</html>
