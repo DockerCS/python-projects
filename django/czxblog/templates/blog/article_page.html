@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
       
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
     
     <!-- For icons -->
-    <link href="css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,9 +31,9 @@
 <!-- Navigation -->
 <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
 	<div class="navbar navbar-default navbar-fixed-top>
-		<button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
-			&#9776;
-		</button>
+		<!--<button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">-->
+            <!--&#9776;-->
+        <!--</button>-->
 		<div class="navbar-header">
 			<a class="navbar-brand" href="/">陈志祥的个人博客</a>
 		</div>
@@ -59,7 +59,6 @@
 					</div>
 				</li>
 			</ul>
-
 			<!-- Search -->
 			<form class="navbar-form navbar-right">
 				<input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
@@ -202,68 +201,41 @@
 
 	</div><!--/container-fluid-->
 	
-	<footer>
+    <footer>
 		<div class="footer-blurb">
-			<div class="container">
+			<div class="container fa-align-center">
 				<div class="row">
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><i class="fa fa-text-height" aria-hidden="true"></i> Dynamic</h3>
-						<p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits. Dramatically visualize customer directed convergence without revolutionary ROI.</p>
-						<p><a class="btn btn-primary" href="#">Procrastinate</a></p>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
+						<p>1、基于Django+Bootstrap开发</p>
+						<p>2、主要发表本人的技术原创博客</p>
+						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><i class="fa fa-wrench" aria-hidden="true"></i> Efficient</h3>
-						<p>Dramatically maintain clicks-and-mortar solutions without functional solutions. Efficiently unleash cross-media information without cross-media value. Quickly maximize timely deliverables for real-time schemas. </p>
-						<p><a class="btn btn-success" href="#">Unleash</a></p>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
+						<p>1、可在相应的博文底下评论</p>
+						<p>2、发邮件到1946709553@qq.com</p>
 					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> Complete</h3>
-						<p>Professionally cultivate one-to-one customer service with robust ideas. Completely synergize resource taxing relationships via premier niche markets. Dynamically innovate resource-leveling customer service for state of the art customer service.</p>
-						<p><a class="btn btn-primary" href="#">Complete</a></p>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
+						<p>1、获得较好的级</p>
+						<p>2、即可打开发几咖啡</p>
 					</div>
-					<div class="col-sm-3 footer-blurb-item">
-						
-						<!-- Thumbnails --> 
-						<h3><i class="fa fa-camera" aria-hidden="true"></i> Phosfluorescent</h3>
-							<div class="row">
-								<div class="col-xs-6">
-									<a href="#" class="img-fluid">
-										<img src="holder.js/110x80?theme=vine" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6">
-									<a href="#" class="img-fluid">
-										<img src="holder.js/110x80?theme=sky" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6">
-									<a href="#" class="img-fluid">
-										<img src="holder.js/110x80?theme=sky" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6">
-									<a href="#" class="img-fluid">
-										<img src="holder.js/110x80?theme=vine" alt="">
-									</a>
-								</div>
-							</div>
-							
-					</div>
-
 				</div>
-				<!-- /.row -->	
+			</div>
+				<!-- /.row -->
 			</div>
         </div>
-        
         <div class="small-print">
         	<div class="container">
         		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
-        		<p>Copyright &copy; Example.com 2015 </p>
+        		<p>Copyright &copy; <a href="/" ><font color="black">chenzhixiang.com</font></a> 2017 </p>
         	</div>
         </div>
 	</footer>
 
-	
+    <a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: block;"></a>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -279,15 +251,15 @@
 
     <!-- Initialize Bootstrap functionality -->
     <script>
-    // Initialize tooltip component
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+        // Initialize tooltip component
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
 
-    // Initialize popover component
-    $(function () {
-      $('[data-toggle="popover"]').popover()
-    })
+        // Initialize popover component
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
     </script> 
     
 	<!-- Placeholder Images -->

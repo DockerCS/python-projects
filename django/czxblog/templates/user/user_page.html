@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
       
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
     
     <!-- For icons -->
-    <link href="css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -94,13 +94,13 @@
             <div class="account_list">
 				<span class="other_account">第三方账号登录：</span>
 				<a href="/oauth/qq_login?state={{reback_url}}" title="QQ登录">
-					<img src="/static/img/logo_qq.png" alt="QQ登录">
+					<img src="/static/images/logo/logo_qq.png" alt="QQ登录">
 				</a>
 				<a href="/oauth/sina_login?state={{reback_url}}" title="微博登录">
-					<img src="/static/img/logo_sina.png" alt="微博登录">
+					<img src="/static/images/logo/logo_sina.png" alt="微博登录">
 				</a>
 				<a href="/oauth/github_login?state={{reback_url}}" title="Github登录">
-					<img src="/static/img/logo_github.png" alt="Github登录">
+					<img src="/static/images/logo/logo_github.png" alt="Github登录">
 				</a>
 			</div>
 
@@ -116,6 +116,40 @@
 			</div>
 		</form>
 	</div>
+
+    <footer>
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
+						<p>1、基于Django+Bootstrap开发</p>
+						<p>2、主要发表本人的技术原创博客</p>
+						<p>3、本站于 2017-7-01 开始建站</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
+						<p>1、可在相应的博文底下评论</p>
+						<p>2、发邮件到1946709553@qq.com</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
+						<p>1、获得较好的级</p>
+						<p>2、即可打开发几咖啡</p>
+					</div>
+				</div>
+			</div>
+				<!-- /.row -->
+			</div>
+        </div>
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        		<p>Copyright &copy; <a href="/" ><font color="black">chenzhixiang.com</font></a> 2017 </p>
+        	</div>
+        </div>
+	</footer>
+
 
     <script type="text/javascript">
         $(function(){
@@ -243,7 +277,6 @@
             float: left;
         }
     </style>
-
 </body>
 
 </html>
