@@ -47,6 +47,7 @@ PROJECT_APPS = [
 
 # 第三方应用
 THIRD_PARTY_APPS = [
+    'apps_project.ueditor'
 ]
 
 INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -66,8 +67,8 @@ ROOT_URLCONF = 'czxblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates'],
-        'APP_DIRS': False,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # 改变templates位置
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -75,7 +76,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            # 'loaders': ['./templates']
         },
     },
 ]
@@ -133,14 +133,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+# 改变static位置
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+# STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 
 STATICFILES_DIRS = (
-    ('css', os.path.join(STATIC_ROOT,'css').replace('\\', '/')),
-    ('js', os.path.join(STATIC_ROOT,'js').replace('\\', '/')),
-    ('images', os.path.join(STATIC_ROOT,'img').replace('\\', '/')),
-    ('upload', os.path.join(STATIC_ROOT,'upload').replace('\\', '/')),
+    os.path.join(BASE_DIR, 'static'),
 )

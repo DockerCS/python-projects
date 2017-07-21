@@ -15,7 +15,7 @@ def user_page(request):
     referrer = request.META.get('HTTP_REFERER', '/')
     data['reback_url'] = referrer
 
-    return render_to_response("user/user_page.html", data)
+    return render_to_response("user/user_page.html", data, )
 
 # 检查登陆
 def check_is_login(request):
@@ -66,18 +66,19 @@ def user_register(request):
         register_name = request.POST.get('user_name')
         register_pwd = request.POST.get('user_pwd')
 
-        if  len(register_name)*len(register_pwd)==0:
-            raise Exception(u'邮箱或密码为空')
-
-        # 匹配邮箱格式
-        pattern = re.compile(r'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$')
-        match = pattern.match(register_name)
-        if not match:
-            raise Exception(u'邮箱格式不正确')
-
-        # 验证密码长度
-        if len(register_pwd)<6:
-            raise Exception(u'密码不能少于6位')
+        # 验证交由前端处理
+        # if  len(register_name)*len(register_pwd) == 0:
+        #     raise Exception(u'邮箱或密码为空')
+        #
+        # # 匹配邮箱格式
+        # pattern = re.compile(r'^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$')
+        # match = pattern.match(register_name)
+        # if not match:
+        #     raise Exception(u'邮箱格式不正确')
+        #
+        # # 验证密码长度
+        # if len(register_pwd)<6:
+        #     raise Exception(u'密码不能少于6位')
 
         # 判断用户是否存在
         user = User.Object.filter(username=register_name)
@@ -109,7 +110,6 @@ def user_register(request):
                 login(request, user)
 
         return HttpResponse(json.dumps(response_data), content_type='application/json')
-
 
 #  忘记密码
 def password_lost(request):

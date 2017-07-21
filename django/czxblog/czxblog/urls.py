@@ -20,7 +20,8 @@ from apps_project.blog.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index, name='index'),
-    url(r'^blog/', include('apps_project.blog.urls')),
-    url(r'^user/', include('apps_project.user.urls')),
+    url(r'^$', index, name='index'),  # 主页
+    url(r'^ueditor/', include('apps_project.ueditor.urls')),  # 百度编辑器
+    url(r'^blog/', include('apps_project.blog.urls')),  # 博客
+    url(r'^user/', include('apps_project.user.urls')),  # 用户
 ]
