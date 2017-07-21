@@ -32,51 +32,49 @@
 </head>
 
 <body>
-<!-- Navigation -->
-<!--<nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">-->
-	<div class="navbar navbar-default navbar-fixed-top>
-		<button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
+    <!-- Navigation -->
+    <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
             &#9776;
         </button>
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/">陈志祥的博客</a>
-		</div>
-		<div class="collapse navbar-collapse" role="navigation" id="navbar">
-			<ul class="nav navbar-nav">
-				<li>
-					<a class="nav-link" href="/">首页</a>
-				</li>
-				<li>
-					<a class="nav-link" href="#">About</a>
-				</li>
-				<li>
-					<a class="nav-link" href="#">Products</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Services
-					</a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<a class="dropdown-item" href="#">Engage</a>
-						<a class="dropdown-item" href="#">Pontificate</a>
-						<a class="dropdown-item" href="#">Synergize</a>
-					</div>
-				</li>
-			</ul>
-			<!-- Search -->
-			<form class="navbar-form navbar-right">
-				<input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
-				<button class="btn btn-secondary" type="submit">搜索</button>
-			</form>
+        <a class="navbar-brand" href="/">陈志祥的博客</a>
+        <div class="collapse navbar-toggleable-sm" id="navbar">
+            <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Engage</a>
+                        <a class="dropdown-item" href="#">Pontificate</a>
+                        <a class="dropdown-item" href="#">Synergize</a>
+                    </div>
+                </li>
+            </ul>
 
-			<ul id="user_part" class="nav navbar-nav navbar-right">
-				<li class="nav-item">
+            <!-- Search -->
+            <form class="form-inline pull-xs-right">
+                <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
+                <button class="btn btn-secondary" type="submit">搜索</button>
+            </form>
+
+			<ul id="user_part" class="nav navbar-nav">
+                <li class="nav-item">
 					<a href="/user/user_page" class="nav-link">登录</a>
 				</li>
 			</ul>
-		</div>
-	</div>
-<!--</nav>-->
+        </div>
+    </nav>
+
 
     <div class="container">
 		<!-- 文章列表 -->
@@ -179,7 +177,7 @@
         </div>
 	</footer>
 
-    <a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: block;"></a>
+	<a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: inline;"></a>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -209,6 +207,85 @@
     
 	<!-- Placeholder Images -->
     <script src="js/holder.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //滚动事件
+            $(window).scroll(function(){
+                var top=$(window).scrollTop();
+                var navbar = $(".navbar-fixed-top");
+
+                if(top==0){
+                    $(".navbar-fixed-top").removeClass("navbar-down");
+                }else{
+                    $(".navbar-fixed-top").addClass("navbar-down");
+                }
+
+                if(top>350){
+                    $("#scrolltop").fadeIn();
+                }else{
+                    $("#scrolltop").fadeOut();
+                }
+            });
+
+            //点击返回头部效果
+            $("#scrolltop").click(function(){
+                $("html,body").animate({scrollTop:0});
+            });
+
+            //窗体改变大小事件
+            $(window).resize(function(){
+                //正文高度
+                var body_height = $(document.body).outerHeight(true);
+
+                //底部元素高度
+                var bottom_height = $("#footer").outerHeight(true);
+
+                //浏览器页面高度
+                var window_height = $(window).height();
+
+                //判断并调整底部元素的样式
+                if($("#footer").hasClass('page-bottom-abs')){
+                    if(body_height + bottom_height >= window_height){
+                        $("#footer").removeClass('page-bottom-abs');
+                    }
+                }else{
+                    if(body_height < window_height){
+                        $("#footer").addClass('page-bottom-abs');
+                    }
+                }
+            });
+
+            //页面加载时，模拟触发一下resize事件
+            $(window).trigger('resize');
+
+            //检查登录状态和获取公告
+            var user_menu = '<li><a href="/user/user_page">登录</a></li>';
+            $.ajax({
+                type:"GET",
+                url:"/user/check_is_login",
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    var notice;
+                    if(data['code']=='0'){
+                        user_menu = data['user_menu'];
+                        notice = data['notice'];
+                    }else{
+
+                        notice='暂无公告';
+                    };
+
+                    //$("#user_part").html(user_menu);
+                    $('.myRewards-text').html(notice);
+                    tctipConfig.list.notice.text=notice;
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    $("#user_part").html(user_menu);
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
