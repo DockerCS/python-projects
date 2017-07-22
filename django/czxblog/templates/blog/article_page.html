@@ -19,8 +19,16 @@
     <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<!--博客样式-->
 	<link rel="stylesheet" type="text/css" href="/static/global/blog.css">
+	<!--评论样式-->
 	<!--全局样式-->
+	<link rel="stylesheet" href="/static/global/comment-2.0.2.css" type="text/css">
 	<link rel="stylesheet" type="text/css" href="/static/global/all-2.0.1.css">
+    <!--使用bootstrap框架-->
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <script src="/static/js/bootstrap/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="/static/js/prettify.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,14 +75,13 @@
                 <button class="btn btn-secondary" type="submit">搜索</button>
             </form>
 
-			<ul id="user_part" class="nav navbar-nav">
+			<ul id="user_part" class="nav navbar-nav navbar-right">
                 <li class="nav-item">
 					<a href="/user/user_page" class="nav-link">登录</a>
 				</li>
 			</ul>
         </div>
     </nav>
-
 
     <div class="container">
 		<!-- 文章列表 -->
@@ -83,7 +90,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="blog_header">
-						<h3>{{ article.title }}</h3>
+						<h3>{{article.title}}</h3>
 					</div>
 					<ul class="list-inline">
 						<li class="list-inline-item">发布时间：{{ article.created_time | date:"Y-m-d H:i:s" }}</li>
@@ -100,37 +107,101 @@
 						<p>{{ content | safe }}</p>
 					</div>
 				</div>
+			</div>
+			<!--评论框-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 id="comment_title">评论：</h4>
+					<button id="reply_cancel" class="btn btn-warning comment_title_btn" style="display: none">取消回复</button>
+					<p id="reply_text_pre" style="display: none"></p>
+				</div>
+				<div class="panel-body">
+					<div class="comment_nav">
+						<form class="form-horizontal" action="/blog/comments/post/" method="post" id="comment_form">
+							<input type="hidden" name="csrfmiddlewaretoken" value="8B2m1lt0TNnUYqG0KXa0v3mk7TGTYcbi">
+							<input id="id_object_pk" name="object_pk" type="hidden" value="12">
+							<input id="id_content_type" name="content_type" type="hidden" value="blog.blog">
+							<input id="id_timestamp" name="timestamp" type="hidden" value="1500731766">
+							<input id="id_security_hash" maxlength="40" name="security_hash" type="hidden" value="fc17a84fca2acfefc84cf09efd00c6e19d28a694">
+							<input type="hidden" name="next" value="/blog/12">
+							<input type="hidden" name="src_url" value="http://yshblog.com/blog/12">
+							<input id="reply_to" type="hidden" name="reply_to" value="0">
+							<input id="root_id" type="hidden" name="root_id" value="0">
+							<input id="reply_name" type="hidden" name="reply_name" value="">
+							<div class="row">
+								<div class="col-md-12">
+									<textarea class="input-xlarge comment_text" id="id_comment" name="comment" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" style="display: none;"></textarea>
+									<div class="input-xlarge comment_text emojionearea" role="application">
+										<div class="emojionearea-editor" contenteditable="true" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" tabindex="0" dir="ltr" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
+										<div class="emojionearea-filters">
+											<div class="emojionearea-filters-scroll" style="left: 0px;">
+												<i class="emojionearea-filter" data-filter="people">
+													<i class="emojione-1f60b"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="nature">
+													<i class="emojione-1f433"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="food_drink">
+													<i class="emojione-1f352"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="celebration">
+													<i class="emojione-1f389"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="activity">
+													<i class="emojione-1f3c6"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="travel">
+													<i class="emojione-1f680"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="objects_symbols">
+													<i class="emojione-1f587"></i>
+												</i>
+												<i class="emojionearea-filter" data-filter="flags">
+													<i class="emojione-1f6a9"></i>
+												</i>
+											</div>
+											<i class="emojionearea-filter-arrow-left"></i>
+											<i class="emojionearea-filter-arrow-right active"></i>
+										</div>
+										<div class="emojionearea-tabs ea-hidden">
+											<div class="emojionearea-tab emojionearea-tab-people ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-nature ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-food_drink ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-celebration ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-activity ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-travel ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-objects_symbols ea-hidden"></div>
+											<div class="emojionearea-tab emojionearea-tab-flags ea-hidden"></div>
+										</div>
+									</div>
 
-				<hr>
-				<!-- Comments -->
-				<h3>评论:</h3>
-				<hr>
-				{% for comment in comments %}
-				<div class="row">
-					<article class="col-xs-12">
-						<p class="pull-right"> <span class="label label-default">tag</span> <span class="label label-default">{{ comment.user }}</span></p>
-						<p>{{ comment.content }}</p>
-						<ul class="list-inline">
-							<li><a href=" ">{{ comment.pub_date | date:"j M" }}</a></li>
-							<li><a href=" "><span class="glyphicon glyphicon-comment"></span> {{ comment.comment_num }} Comments</a></li>
-							<li><a href=" "><span class="glyphicon glyphicon-thumbs-up"></span>{{ comment.poll_num }} Upvotes</a></li>
-						</ul>
-					</article>
-				</div>
-				<hr>
-				{% endfor %}
-				<div class="row">
-					<article class="col-xs-12">
-						<form action="/focus/{{ article.id }}/comment/" method="post">
-							{% csrf_token %}
-							{{ commentform.as_p }}
-							<input class="btn btn-default" type="submit" value="Submit" />
+									<!--如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论-->
+									<input type="text" style="display:none;" id="id_honeypot" name="honeypot">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-actions comment_button">
+									<span id="tip_text"></span>
+									<input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交">
+									<botton class="btn btn-default" id="reset_btn">清空</botton>
+								</div>
+							</div>
 						</form>
-					</article>
+					</div>
 				</div>
-				<hr>
-			</div><!--/Center Column-->
-		</div>
+			</div>
+			<!--评论列表-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4>最新评论</h4>
+					<button id="jump_to_comment" class="btn btn-info comment_title_btn">我要评论</button>
+				</div>
+				<div id="comments_list" class="panel-body">
+
+				</div>
+			</div>
+		</div><!--/Center Column-->
 
 		<!-- Right Column -->
 		<div class="col-md-3 col-xs-12 blog-border">
@@ -152,17 +223,20 @@
 				<div class="row">
 					<div class="col-sm-4 footer-blurb-item">
 						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
+						<hr>
 						<p>1、基于Django+Bootstrap开发</p>
 						<p>2、主要发表本人的技术原创博客</p>
 						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
 						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
+						<hr>
 						<p>1、可在相应的博文底下评论</p>
 						<p>2、发邮件到1946709553@qq.com</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
 						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
+						<hr>
 						<p>1、获得较好的级</p>
 						<p>2、即可打开发几咖啡</p>
 					</div>
@@ -206,7 +280,7 @@
     </script> 
     
 	<!-- Placeholder Images -->
-    <script src="js/holder.min.js"></script>
+    <!--<script src="/static/js/holder.min.js"></script>-->
     <script type="text/javascript">
         $(function(){
             //滚动事件
