@@ -14,7 +14,8 @@
       
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
     <link href="/static/css/custom.css" rel="stylesheet">
-    
+    <!--网页图标-->
+    <link rel="shortcut icon" href="/static/images/Panda_Kungfu.ico">
     <!-- For icons -->
     <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<!--博客样式-->
@@ -40,26 +41,31 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
-        <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
-            &#9776;
-        </button>
-        <a class="navbar-brand" href="/">陈志祥的博客</a>
-        <div class="collapse navbar-toggleable-sm" id="navbar">
+    <!-- 顶部状态栏 -->
+    <div id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <div class="navbar-header">
+			<button class="navbar-toggle navbar-white" type="button" data-toggle="collapse" data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">陈志祥的博客</a>
+		</div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">首页</a>
+                <li class>
+                    <a href="/"><i class="fa fa-home"></i> 首页</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class>
+					<a href="#"><i class="fa"></i>About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                <li class>
+					<a href="#"><i class="fa"></i>Products</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Services
+                <li class>
+                    <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa"></i>Services
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Engage</a>
@@ -70,18 +76,20 @@
             </ul>
 
             <!-- Search -->
-            <form class="form-inline pull-xs-right">
+            <form action="/search/" class="navbar-form navbar-right">
                 <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
-                <button class="btn btn-secondary" type="submit">搜索</button>
+                <button type="submit">
+					<i class="fa fa-search-plus"></i>
+				</button>
             </form>
 
 			<ul id="user_part" class="nav navbar-nav navbar-right">
-                <li class="nav-item">
-					<a href="/user/user_page" class="nav-link">登录</a>
+                <li>
+					<a href="/user/user_page">登录</a>
 				</li>
 			</ul>
         </div>
-    </nav>
+    </div>
 
     <div class="container">
 		<!-- 文章列表 -->
@@ -198,9 +206,66 @@
 					<button id="jump_to_comment" class="btn btn-info comment_title_btn">我要评论</button>
 				</div>
 				<div id="comments_list" class="panel-body">
+                    {% for comment in comments %}
+					<div class="blog_comment" name="F{{comment.id}}">
+						<div class="comment_user">
+							<img class="user_avatar" src="/{{comment.user.get_avatar_url}}" alt="{{comment.user_name}}">
+							<p class="uesr_name">{{comment.user_name}}</p>
+						</div>
 
+						<div class="comment_body">
+							<div class="comment_content">
+								<p>{{ comment.comment }}</p>
+							</div>
+
+							<p class="comment_bottom">
+								<span>{{comment.submit_date|date:"Y-m-d H:i"}}</span>
+								<span class='reply_button'>
+                                    <a href='javascript:void(0);' onclick='reply_click(this);' root='{{comment.id}}' role='{{comment.id}}' base='{{comment.user_name}}'>回复</a>
+                                </span>
+							</p>
+
+							{% if comment.replies%}
+							<ul class="comment_reply">
+								{% for reply in comment.replies %}
+								<li name='F{{reply.id}}'>
+									<img class="reply_avatar" src="/{{reply.user.get_avatar_url}}">
+
+									<div class="reply_body">
+										<p>
+											{#判断是否回复评论#}
+											{% ifequal comment.id reply.reply_to %}
+											<span class="reply_name">{{reply.user_name}}</span>
+											{% else %}
+											<span class="reply_name">{{reply.user_name}}</span>
+											<span> 回复 </span>
+											<span class="reply_name">{{reply.reply_name}}</span>
+											{% endifequal %}
+										</p>
+
+										<div class="reply_content">
+											<p>{{reply.comment}}</p>
+										</div>
+
+										<p class="comment_bottom">
+											<span>{{reply.submit_date|date:"Y-m-d H:i"}}</span>
+											<span class='reply_button'>
+                                                <a href='javascript:void(0);' onclick='reply_click(this);' root='{{reply.root_id}}' role='{{reply.id}}' base='{{reply.user_name}}'>回复</a>
+											</span>
+										</p>
+									</div>
+								</li>
+								{% endfor %}
+							</ul>
+							{% endif %}
+                        </div>
+						<span class="clearfix"></span>
+                    </div>
+                {% empty %}
+					智慧如你，不想发表一下意见吗？
+                {% endfor %}
 				</div>
-			</div>
+		    </div>
 		</div><!--/Center Column-->
 
 		<!-- Right Column -->
@@ -222,21 +287,18 @@
 			<div class="container fa-align-center">
 				<div class="row">
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
-						<hr>
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
 						<p>1、基于Django+Bootstrap开发</p>
 						<p>2、主要发表本人的技术原创博客</p>
 						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
-						<hr>
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i> 建议反馈</h3>
 						<p>1、可在相应的博文底下评论</p>
 						<p>2、发邮件到1946709553@qq.com</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
-						<hr>
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> 友情链接</h3>
 						<p>1、获得较好的级</p>
 						<p>2、即可打开发几咖啡</p>
 					</div>

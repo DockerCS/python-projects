@@ -14,11 +14,16 @@
       
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
     <link href="/static/css/custom.css" rel="stylesheet">
-    
+    <!--网页图标-->
+    <link rel="shortcut icon" href="/static/images/Panda_Kungfu.ico">
     <!-- For icons -->
     <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<!--全局样式-->
 	<link rel="stylesheet" type="text/css" href="/static/global/all-2.0.1.css">
+	<!--使用bootstrap框架-->
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <script src="/static/js/bootstrap/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,26 +35,31 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
-        <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
-            &#9776;
-        </button>
-        <a class="navbar-brand" href="/">陈志祥的博客</a>
-        <div class="collapse navbar-toggleable-sm" id="navbar">
+    <!-- 顶部状态栏 -->
+    <div id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <div class="navbar-header">
+			<button class="navbar-toggle navbar-white" type="button" data-toggle="collapse" data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">陈志祥的博客</a>
+		</div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">首页</a>
+                <li class>
+                    <a href="/"><i class="fa fa-home"></i> 首页</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class>
+					<a href="#"><i class="fa"></i>About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                <li class>
+					<a href="#"><i class="fa"></i>Products</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Services
+                <li class>
+                    <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa"></i>Services
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Engage</a>
@@ -60,19 +70,20 @@
             </ul>
 
             <!-- Search -->
-            <form class="form-inline pull-xs-right">
+            <form action="/search/" class="navbar-form navbar-right">
                 <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
-                <button class="btn btn-secondary" type="submit">搜索</button>
+                <button type="submit">
+					<i class="fa fa-search-plus"></i>
+				</button>
             </form>
 
 			<ul id="user_part" class="nav navbar-nav navbar-right">
                 <li>
-					<a href="/user/user_page" class="nav-link">登录</a>
+					<a href="/user/user_page">登录</a>
 				</li>
 			</ul>
-
         </div>
-    </nav>
+    </div>
 
 	<div class="container">
 		<div class="head_text">
@@ -80,7 +91,6 @@
 			<small>让我们一起分享你的知识、经验和见解</small>
 		</div>
 		<form id="user_form" class="main_form" method='post'>
-			<!--{%csrf_token%}-->
 			<input id="reback_url" type="hidden" value="{{reback_url}}">
 			<div id="user_control">
 				<div class="control-group">
@@ -121,23 +131,23 @@
 
     <footer>
 		<div class="footer-blurb">
-			<div class="container">
+			<div class="container fa-align-center">
 				<div class="row">
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
 						<p>1、基于Django+Bootstrap开发</p>
 						<p>2、主要发表本人的技术原创博客</p>
 						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i> 建议反馈</h3>
 						<p>1、可在相应的博文底下评论</p>
 						<p>2、发邮件到1946709553@qq.com</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
-						<p>1、暂时还没有1</p>
-						<p>2、暂时还没有2</p>
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> 友情链接</h3>
+						<p>1、获得较好的级</p>
+						<p>2、即可打开发几咖啡</p>
 					</div>
 				</div>
 			</div>
@@ -150,6 +160,112 @@
         </div>
 	</footer>
 
+	<script src="/static/js/holder.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //滚动事件
+            $(window).scroll(function(){
+                var top=$(window).scrollTop();
+                var navbar = $(".navbar-fixed-top");
+
+                if(top==0){
+                    $(".navbar-fixed-top").removeClass("navbar-down");
+                }else{
+                    $(".navbar-fixed-top").addClass("navbar-down");
+                }
+
+                if(top>350){
+                    $("#scrolltop").fadeIn();
+                }else{
+                    $("#scrolltop").fadeOut();
+                }
+            });
+
+            //点击返回头部效果
+            $("#scrolltop").click(function(){
+                $("html,body").animate({scrollTop:0});
+            });
+
+            //窗体改变大小事件
+            $(window).resize(function(){
+                //正文高度
+                var body_height = $(document.body).outerHeight(true);
+
+                //底部元素高度
+                var bottom_height = $("#footer").outerHeight(true);
+
+                //浏览器页面高度
+                var window_height = $(window).height();
+
+                //判断并调整底部元素的样式
+                if($("#footer").hasClass('page-bottom-abs')){
+                    if(body_height + bottom_height >= window_height){
+                        $("#footer").removeClass('page-bottom-abs');
+                    }
+                }else{
+                    if(body_height < window_height){
+                        $("#footer").addClass('page-bottom-abs');
+                    }
+                }
+            });
+
+            //页面加载时，模拟触发一下resize事件
+            $(window).trigger('resize');
+
+//            //检查登录状态和获取公告
+//            var user_menu = '<li><a href="/user/login_page">登录</a></li>';
+//            $.ajax({
+//                type:"GET",
+//                url:"/user/check_is_login",
+//                cache:false,
+//                dataType:'json',
+//                success:function(data){
+//                    var notice;
+//                    if(data['code']=='0'){
+//                        user_menu = data['user_menu'];
+//                        notice = data['notice'];
+//                    }else{
+//
+//                        notice='暂无公告';
+//                    };
+//
+//                    //$("#user_part").html(user_menu);
+//                    $('.myRewards-text').html(notice);
+//                    tctipConfig.list.notice.text=notice;
+//                },
+//                error:function(XMLHttpRequest, textStatus, errorThrown){
+//                    $("#user_part").html(user_menu);
+//                }
+//            });
+        });
+    </script>
+	<!--登录注册页面样式-->
+    <style type="text/css">
+        .head_text{
+            text-align: center;
+            margin: 2em auto;
+        }
+        .main_form{
+            margin: 0 auto;
+            width: 330px;
+            border: 2px #aaa dashed;
+            padding: 1.5em 0em 0em 1.5em;
+        }
+        .main_form a{
+            text-decoration: none;
+        }
+        .other_account{
+            font-weight: bolder;
+        }
+        .account_list{
+            margin-top: 0.5em;
+        }
+        .form_buttons{
+            margin-top: 2em;
+            float: left;
+        }
+    </style>
+    <!--前端登录注册ajax请求-->
     <script type="text/javascript">
         $(function(){
             //登录
@@ -170,7 +286,7 @@
                 //登录
                 $.ajax({
                     type: "POST",
-                    data: $('#user_form').serialize(),
+                    data: $('#user_form').serialize(), //$.param(data),
                     url: "{% url 'user_login' %}",
                     cache: false,
                     dataType: "json",
@@ -214,7 +330,7 @@
 
                 if(reg_pwd==''){
                     tip.text('密码不能为空');
-                    return false;
+                    return false    ;
                 };
                 if(reg_pwd.length<6){
                     tip.text('密码不能少于6位');
@@ -224,7 +340,7 @@
                 tip.text('注册中，请稍后...');
                 $.ajax({
                     type: "POST",
-                    data: $('#user_form').serialize(),
+                    data:$('#user_form').serialize(), // $.param(data),
                     url: "{% url 'user_register' %}",
                     cache: false,
                     dataType: "json",
@@ -250,33 +366,8 @@
                 return false;
             });
         });
-	</script>
-	<!--登录注册样式-->
-    <style type="text/css">
-        .head_text{
-            text-align: center;
-            margin: 2em auto;
-        }
-        .main_form{
-            margin: 0 auto;
-            width: 330px;
-            border: 2px #aaa dashed;
-            padding: 1.5em 0em 0em 1.5em;
-        }
-        .main_form a{
-            text-decoration: none;
-        }
-        .other_account{
-            font-weight: bolder;
-        }
-        .account_list{
-            margin-top: 0.5em;
-        }
-        .form_buttons{
-            margin-top: 2em;
-            float: left;
-        }
-    </style>
+    </script>
+
 </body>
 
 </html>

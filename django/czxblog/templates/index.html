@@ -14,7 +14,8 @@
 
     <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
     <link href="/static/css/custom.css" rel="stylesheet">
-    
+    <!--网页图标-->
+    <link rel="shortcut icon" href="/static/images/Panda_Kungfu.ico">
     <!-- For icons -->
     <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<!--博客样式-->
@@ -36,26 +37,31 @@
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
-        <button class="navbar-toggler hidden-md-up pull-right" type="button" data-toggle="collapse" data-target="#navbar">
-            &#9776;
-        </button>
-        <a class="navbar-brand" href="/">陈志祥的博客</a>
-        <div class="collapse navbar-toggleable-sm" id="navbar">
+    <!-- 顶部状态栏 -->
+    <div id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <div class="navbar-header">
+			<button class="navbar-toggle navbar-white" type="button" data-toggle="collapse" data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">陈志祥的博客</a>
+		</div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">首页</a>
+                <li class>
+                    <a href="/"><i class="fa fa-home"></i> 首页</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class>
+					<a href="#"><i class="fa"></i>About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
+                <li class>
+					<a href="#"><i class="fa"></i>Products</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Services
+                <li class>
+                    <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa"></i>Services
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Engage</a>
@@ -66,9 +72,11 @@
             </ul>
 
             <!-- Search -->
-            <form class="form-inline pull-xs-right">
+            <form action="/search/" class="navbar-form navbar-right">
                 <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
-                <button class="btn btn-secondary" type="submit">搜索</button>
+                <button type="submit">
+					<i class="fa fa-search-plus"></i>
+				</button>
             </form>
 
 			<ul id="user_part" class="nav navbar-nav navbar-right">
@@ -77,7 +85,7 @@
 				</li>
 			</ul>
         </div>
-    </nav>
+    </div>
 
     <div class="container">
 		<!--blog-->
@@ -91,8 +99,8 @@
 					<div class="blog-tags">
 						<ul>
                             <li>{{ article.created_time | date:"Y-m-d H:i:s" }}</li>
-							<li><a href="#">{{ article.comment_num }} 评论</a></li>
 							<li><a href="#">{{ article.poll_num }} 赞</a></li>
+                            <li><a href="#">{{ article.comment_num }} 评论</a></li>
 							<li><a href="#">{{ article.category }}</a></li>
 						</ul>
 					</div>
@@ -113,6 +121,7 @@
                               {% endif %}" aria-label="Previous"><span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
+
                         {% for page in pages.page_range_ex %}
                         {% if page == '...' %}
                         <li><span>...</span></li>
@@ -136,7 +145,7 @@
                     <ul class="pagination">
                         <li id="page_goto">
                             <span>
-                                <input type="text" value="{{paginator.page_goto}}" />
+                                <input type="text" value="{{paginator.page_goto}}" placeholder="{{article_list.number}}">
                             </span>
                         </li>
                         <li><a href="javascript:void(0);" onClick="page_goto();">Go</a></li>
@@ -159,21 +168,18 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-text-height" aria-hidden="true"></i>关于本站</h3>
-                        <hr>
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
 						<p>1、基于Django+Bootstrap开发</p>
 						<p>2、主要发表本人的技术原创博客</p>
 						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-wrench" aria-hidden="true"></i>建议反馈</h3>
-                        <hr>
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i> 建议反馈</h3>
 						<p>1、可在相应的博文底下评论</p>
 						<p>2、发邮件到1946709553@qq.com</p>
 					</div>
 					<div class="col-sm-4 footer-blurb-item">
-						<h3><i class="fa fa-paperclip" aria-hidden="true"></i>友情链接</h3>
-                        <hr>
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> 友情链接</h3>
 						<p>1、暂时还没有</p>
 						<p>2、暂时还没有2</p>
 					</div>
