@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>夕象 | 陈志祥的个人博客</title>
+
+    <!-- Bootstrap 4 CSS. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!--网页图标-->
+    <link rel="shortcut icon" href="/static/images/Panda_Kungfu.ico">
+    <!-- For icons -->
+    <link href="/static/css/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<!--博客样式-->
+	<link rel="stylesheet" type="text/css" href="/static/global/blog.css">
+	<!--全局样式-->
+	<link rel="stylesheet" type="text/css" href="/static/global/all-2.0.1.css">
+    <!--使用bootstrap框架-->
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <script src="/static/js/bootstrap/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+    <!--搜索词高亮-->
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- 顶部状态栏 -->
+    <div id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <div class="navbar-header">
+			<button class="navbar-toggle navbar-white" type="button" data-toggle="collapse" data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/" style="font-size:20px;">陈志祥的博客</a>
+		</div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="a-tag" href="/"><i class="fa fa-home"></i> 首页</a>
+                </li>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-wechat"></i> 技术</a>
+                </li>
+                <li>
+					<a href="#" class="a-tag"><i class="fa"></i> Products</a>
+                </li>
+                <li>
+                    <a href="#" class="a-tag" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa"></i>Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Engage</a>
+                        <a class="dropdown-item" href="#">Pontificate</a>
+                        <a class="dropdown-item" href="#">Synergize</a>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- Search -->
+            <form action="{% url 'haystack_search' %}" method="get" class="navbar-form navbar-right" role="search">
+                <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off" required>
+                <button type="submit">
+					<i class="fa fa-search-plus"></i>
+				</button>
+            </form>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li>
+					<a href="/user/user_page" style="font-size:17px;color: white">登录</a>
+				</li>
+			</ul>
+        </div>
+    </div>
+
+    <div class="container">
+		<!--搜索结果-->
+		<div class="col-md-9 col-xs-12">
+            {% load highlight %}
+            {% block main %}
+            {% if query %}
+            {% for result in page.object_list %}
+            <article class="article article-{{ result.object.pk }}">
+                <header class="entry-header">
+                    <h1 class="entry-title">
+                        <a href="{{ result.object.get_absolute_url }}">{% highlight result.object.title with query %}</a>
+                    </h1>
+                    <div class="entry-meta">
+                        <span class="post-category">
+                            <a href="{% url 'blog:category' result.object.category.pk %}">
+                            {{ result.object.category.name }}</a>
+                        </span>
+                        <span class="post-date">
+                            <a href="#">
+                                <time class="entry-date" datetime="{{ result.object.created_time }}">
+                                {{ result.object.created_time }}</time>
+                            </a>
+                        </span>
+                        <span class="post-author"><a href="#">{{ result.object.author }}</a></span>
+                        <span class="comments-link">
+                            <a href="{{ result.object.get_absolute_url }}#comment-area">
+                            {{ result.object.comment_set.count }} 评论</a>
+                        </span>
+                        <span class="views-count">
+                            <a href="{{ result.object.get_absolute_url }}">{{ result.object.views }} 阅读</a>
+                        </span>
+                    </div>
+                </header>
+                <div class="entry-content clearfix">
+                    <p>{% highlight result.object.body with query %}</p>
+                    <div class="read-more cl-effect-14">
+                        <a href="{{ result.object.get_absolute_url }}" class="more-link">
+                            继续阅读 <span class="meta-nav">→</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="no-post">没有搜索到你想要的结果！</div>
+            {% endfor %}
+            {% if page.has_previous or page.has_next %}
+            <div>
+                {% if page.has_previous %}
+                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous
+                    {% if page.has_previous %}</a>{% endif %}
+                |
+                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next
+                &raquo;{% if page.has_next %}</a>{% endif %}
+            </div>
+            {% endif %}
+            {% else %}
+            请输入搜索关键词，例如 django
+            {% endif %}
+            {% endblock main %}
+		</div><!--搜索结果-->
+
+		<!-- Right Column -->
+		<div class="col-md-3 col-xs-12 blog-border">
+			<h4></h4>
+			<h4></h4>
+			<h4></h4>
+		</div><!--/Right Column -->
+    </div><!--/container-->
+
+
+	<footer id="footer">
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
+						<p>1、基于Django+Bootstrap开发</p>
+						<p>2、主要发表本人的技术原创博客</p>
+						<p>3、本站于 2017-7-01 开始建站</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i> 建议反馈</h3>
+						<p>1、可在相应的博文底下评论</p>
+						<p>2、发邮件到1946709553@qq.com</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> 友情链接</h3>
+						<p>1、暂时还没有</p>
+						<p>2、暂时还没有2</p>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+				<p>Copyright &copy; <a href="/" ><font color="black">chenzhixiang.com</font></a> 2017 </p>
+        	</div>
+        </div>
+	</footer>
+
+    <!--返回顶部-->
+    <a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: inline;"></a>
+    
+
+</body>
+
+</html>
