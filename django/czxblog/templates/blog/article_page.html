@@ -117,6 +117,20 @@
 				<div class="panel-body">
 					<div class="blog_content">
 						<p>{{ content | safe }}</p>
+						<p>
+							{% if pre_article %}
+							<a href="/blog/{{ pre_article.id }}">上一篇：{{ pre_article.title }}</a>
+							{% else %}
+							上一篇：没有了
+							{% endif %}
+						</p>
+						<p>
+							{% if next_article %}
+							<a href="/blog/{{ next_article.id }}">下一篇：{{ next_article.title }}</a>
+							{% else %}
+							下一篇：没有了
+							{% endif %}
+						</p>
 					</div>
 				</div>
 			</div>
