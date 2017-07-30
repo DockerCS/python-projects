@@ -2,7 +2,7 @@
 <!-- Template by Quackit.com -->
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -46,21 +46,21 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">陈志祥的博客</a>
+			<a class="navbar-brand" href="/" style="font-size:20px;">陈志祥的博客</a>
 		</div>
         <div class="collapse navbar-collapse" id="example-navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class>
-                    <a href="/"><i class="fa fa-home"></i> 首页</a>
+                <li>
+                    <a class="a-tag" href="/"><i class="fa fa-home"></i> 首页</a>
                 </li>
-                <li class>
-					<a href="#"><i class="fa"></i>About</a>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-wechat"></i> 技术</a>
                 </li>
-                <li class>
-					<a href="#"><i class="fa"></i>Products</a>
+                <li>
+					<a href="#" class="a-tag"><i class="fa"></i> Products</a>
                 </li>
-                <li class>
-                    <a href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li>
+                    <a href="#" class="a-tag" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fa"></i>Services
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -72,16 +72,16 @@
             </ul>
 
             <!-- Search -->
-            <form action="/search/" class="navbar-form navbar-right">
+            <form action="{% url 'haystack_search' %}" class="navbar-form navbar-right">
                 <input class="form-control" type="text" placeholder="搜索你感兴趣的内容" autocomplete="off">
                 <button type="submit">
 					<i class="fa fa-search-plus"></i>
 				</button>
             </form>
 
-			<ul id="user_part" class="nav navbar-nav navbar-right">
+			<ul class="nav navbar-nav navbar-right">
                 <li>
-					<a href="/user/user_page">登录</a>
+					<a href="/user/user_page" style="font-size:17px;color: white">登录</a>
 				</li>
 			</ul>
         </div>
@@ -90,23 +90,31 @@
     <div class="container">
 		<!--blog-->
 		<div class="col-md-9 col-xs-12">
-			<!-- Articles -->
+			<!-- 文章列表 -->
 			{% for article in article_list %}
 			<div class="blog-border">
 				<div class="blog-item">
-					<div class="blog-title"><a id="article_title", href="/blog/{{ article.id }}">{{ article.title}}</a></div>
+					<div class="blog-title">
+                        <!--<a href="#">{{ article.category }} <i class="label"></i></a>-->
+                        <a id="article_title", href="/blog/{{ article.id }}">{{ article.title}}</a>
+                    </div>
 					<div class="blog_descipt">{{ article.content|truncatechars_html:150 | safe }}</div>
 					<div class="blog-tags">
 						<ul>
-                            <li>{{ article.created_time | date:"Y-m-d H:i:s" }}</li>
-							<li><a href="#">{{ article.poll_num }} 赞</a></li>
-                            <li><a href="#">{{ article.comment_num }} 评论</a></li>
-							<li><a href="#">{{ article.category }}</a></li>
+                            <!--{# 导入阅读器标签 #}-->
+                            {% load view_num %}
+                            {% get_view_nums for article as view_num %}
+                            <li><i class="fa fa-clock-o"></i> {{ article.created_time | date:"Y-m-d" }}</li>
+                            <li><i class="fa fa-eye"></i> {{ view_num }}浏览</li>
+							<li><i class="fa fa-heart-o"></i> <a href="#">{{ article.poll_num }}喜欢</a></li>
+                            <li><i class="fa fa-comments-o"></i> <a href="#">{{ article.comment_num }}评论</a></li>
+							<li><i class="fa fa-tags"></i> <a href="#">{{ article.category }}</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			{% endfor %}
+			{% endfor %}<!--文章列表-->
+
             <!--分页功能-->
             <div class="blog_list_footer">
                 <span class="blog_footer_tip">共{{pages.count}}篇博文。当前第{{article_list.number}}页，共{{pages.num_pages}}页</span>
@@ -151,15 +159,36 @@
                         <li><a href="javascript:void(0);" onClick="page_goto();">Go</a></li>
                     </ul>
                 </div>
-            </div>
+            </div><!--分页功能-->
 		</div><!--blog-->
 
-		<!-- Right Column -->
+		<!-- 右边推荐栏 -->
 		<div class="col-md-3 col-xs-12 blog-border">
-			<h4></h4>
-			<h4></h4>
-			<h4></h4>
-		</div><!--/Right Column -->
+			<div class="side-list">
+                <h4>
+                    <i class="fa fa-book"></i> 随机推荐
+                </h4>
+                <ul>
+                    {% for article in rand_articles %}
+                    <li>
+                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="side-list">
+                <h4>
+                    <i class="fa fa-book"></i> 猜你喜欢
+                </h4>
+                <ul>
+                    {% for article in rand_articles %}
+                    <li>
+                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+		</div><!--右边推荐栏 -->
     </div><!--/container-->
 
 
@@ -169,7 +198,7 @@
 				<div class="row">
 					<div class="col-sm-4 footer-blurb-item">
 						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
-						<p>1、基于Django+Bootstrap开发</p>
+                      	<p>1、基于Django+Bootstrap开发</p>
 						<p>2、主要发表本人的技术原创博客</p>
 						<p>3、本站于 2017-7-01 开始建站</p>
 					</div>
@@ -319,6 +348,7 @@
         }
     </script>
     <style type="text/css">
+
         /*页码跳转的显示样式*/
         #page_goto span{
             padding: 6px 4px;
