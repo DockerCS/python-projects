@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 {% load highlight %}
 
+{% block title %}
+    <title>{{ query }}_夕象的博客搜索结果</title>
+{% endblock title %}
 
-
-{% block content %}
+{% block article_list %}
 {% if query %}
    <div class="blog-border">
        {% for result in page.object_list %}
           <div class="blog-item">
               <div class="blog-title">
-                  <a id="article_title", href="/blog/{{ result.object.id }}"><span>{% highlight result.object.title with query %}</span></a>
+                  <a id="article_title", href="/blog/{{ result.object.id }}">{% highlight result.object.title with query %}</a>
               </div>
               <div class="blog_descipt">{% highlight result.object.content with query %}...</div>
               <div class="blog-tags">
@@ -30,6 +32,6 @@
        {% endfor %}
    </div>
 {% endif %}
-{% endblock %}
+{% endblock article_list %}
 
 
