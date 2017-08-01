@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!-- Template by Quackit.com -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>夕象 | 陈志祥的个人博客</title>
+
+    <!-- Bootstrap 4 CSS. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+
+    <!-- Custom CSS: You can use this stylesheet to override any Bootstrap styles and/or apply your own styles -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <!--网页图标-->
+    <link rel="shortcut icon" href="/static/images/Panda_Kungfu.ico">
+    <!-- For icons -->
+    <link href="/static/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<!--博客样式-->
+	<link rel="stylesheet" type="text/css" href="/static/global/blog.css">
+	<!--全局样式-->
+	<link rel="stylesheet" type="text/css" href="/static/global/all-2.0.1.css">
+    <!--使用bootstrap框架-->
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css">
+    <script src="/static/js/bootstrap/jquery-1.11.3.min.js"></script>
+    <script src="/static/js/bootstrap/bootstrap.min.js"></script>
+
+    <!--搜索词高亮-->
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- 顶部状态栏 -->
+    <div id="topNav" class="navbar navbar-full navbar-static-top navbar-dark bg-inverse m-b-1">
+        <div class="navbar-header">
+			<button class="navbar-toggle navbar-white" type="button" data-toggle="collapse" data-target="#example-navbar-collapse">
+				<span class="sr-only">切换导航</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/" style="font-size:20px;">陈志祥的博客</a>
+		</div>
+        <div class="collapse navbar-collapse" id="example-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="a-tag" href="/"><i class="fa fa-home"></i> 首页</a>
+                </li>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-chrome"></i> 网站建设</a>
+                </li>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-"></i> Python</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="a-tag dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa"></i>Services
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">Engage</a>
+                        <a class="dropdown-item" href="#">Pontificate</a>
+                        <a class="dropdown-item" href="#">Synergize</a>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- 搜索 -->
+            <form class="navbar-form navbar-right" role="search" method="get" id="searchform" action="{% url 'haystack_search' %}">
+                <input class="form-control" type="search" name="q" placeholder="搜索你感兴趣的内容" autocomplete="off" required>
+                <button type="submit">
+                    <i class="fa fa-search-plus"></i>
+                </button>
+            </form>
+
+			<ul class="nav navbar-nav navbar-right">
+                <li>
+					<a href="/user/user_page" style="font-size:17px;color: white"><i class="fa fa-user-circle-o"></i> 登录</a>
+				</li>
+			</ul>
+        </div>
+    </div>
+
+    <div class="container">
+		<!--blog-->
+		<div class="col-md-9 col-xs-12">
+            {% block content %}
+            {% endblock %}
+		</div><!--blog-->
+
+		<!-- 右边推荐栏 -->
+		<div class="col-md-3 col-xs-12 blog-border">
+			<div class="side-list">
+                <h4>
+                    <i class="fa fa-book"></i> 随机推荐
+                </h4>
+                <ul>
+                    {% for article in rand_articles %}
+                    <li>
+                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="side-list">
+                <h4>
+                    <i class="fa fa-recycle"></i> 猜你喜欢
+                </h4>
+                <ul>
+                    {% for article in rand_articles %}
+                    <li>
+                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+		</div><!--右边推荐栏 -->
+    </div><!--/container-->
+
+    <footer>
+		<div class="footer-blurb">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-text-height" aria-hidden="true"></i> 关于本站</h3>
+                        <p>1、基于Django+Bootstrap开发</p>
+						<p>2、主要发表本人的技术原创博客</p>
+						<p>3、本站于 2017-7-01 开始建站</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-wrench" aria-hidden="true"></i> 建议反馈</h3>
+						<p>1、可在相应的博文底下评论</p>
+						<p>2、发邮件到1946709553@qq.com</p>
+					</div>
+					<div class="col-sm-4 footer-blurb-item">
+						<h3><i class="fa fa-paperclip" aria-hidden="true"></i> 友情链接</h3>
+						<p>1、获得较好的级</p>
+						<p>2、即可打开发几咖啡</p>
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="small-print">
+        	<div class="container">
+        		<p><a href="#">Terms &amp; Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact</a></p>
+        		<p>Copyright &copy; <a href="/" ><font color="black">chenzhixiang.com</font></a> 2017 </p>
+        	</div>
+        </div>
+	</footer>
+
+	<a id="scrolltop" class="gotop" href="javascript:void(0)" title="返回顶部" style="display: inline;"></a>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+
+    <!-- Tether -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap 4 JavaScript. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+
+    <!-- Initialize Bootstrap functionality -->
+    <script>
+        // Initialize tooltip component
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        // Initialize popover component
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+    
+	<!-- Placeholder Images -->
+	<script src="/static/js/holder.min.js"></script>
+	<!--窗口和滚动样式-->
+    <script type="text/javascript">
+        $(function(){
+            //滚动事件
+            $(window).scroll(function(){
+                var top=$(window).scrollTop();
+                var navbar = $(".navbar-fixed-top");
+
+                if(top==0){
+                    $(".navbar-fixed-top").removeClass("navbar-down");
+                }else{
+                    $(".navbar-fixed-top").addClass("navbar-down");
+                }
+
+                if(top>350){
+                    $("#scrolltop").fadeIn();
+                }else{
+                    $("#scrolltop").fadeOut();
+                }
+            });
+
+            //点击返回头部效果
+            $("#scrolltop").click(function(){
+                $("html,body").animate({scrollTop:0});
+            });
+
+            //窗体改变大小事件
+            $(window).resize(function(){
+                //正文高度
+                var body_height = $(document.body).outerHeight(true);
+
+                //底部元素高度
+                var bottom_height = $("#footer").outerHeight(true);
+
+                //浏览器页面高度
+                var window_height = $(window).height();
+
+                //判断并调整底部元素的样式
+                if($("#footer").hasClass('page-bottom-abs')){
+                    if(body_height + bottom_height >= window_height){
+                        $("#footer").removeClass('page-bottom-abs');
+                    }
+                }else{
+                    if(body_height < window_height){
+                        $("#footer").addClass('page-bottom-abs');
+                    }
+                }
+            });
+
+            //页面加载时，模拟触发一下resize事件
+            $(window).trigger('resize');
+
+            //检查登录状态和获取公告
+            var user_menu = '<li><a href="/user/user_page">登录</a></li>';
+            $.ajax({
+                type:"GET",
+                url:"/user/check_is_login",
+                cache:false,
+                dataType:'json',
+                success:function(data){
+                    var notice;
+                    if(data['code']=='0'){
+                        user_menu = data['user_menu'];
+                        notice = data['notice'];
+                    }else{
+
+                        notice='暂无公告';
+                    };
+
+                    //$("#user_part").html(user_menu);
+                    $('.myRewards-text').html(notice);
+                    tctipConfig.list.notice.text=notice;
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown){
+                    $("#user_part").html(user_menu);
+                }
+            });
+        });
+    </script>
+    <!--页码显示-->
+    <script type="text/javascript">
+        //设置凸显当前页码
+        $(".pagination li a").each(function(){
+            if($(this).text()=="{{ article_list.number }}"){
+                $(this).parent().addClass("active");
+            }
+        });
+        //页码跳转处理
+        function page_goto(page){
+            var page = $("#page_goto input")[0].value;
+            window.location.href = '?page=' + page;  //重定向
+            return false;
+        }
+    </script>
+    <style type="text/css">
+
+        /*页码跳转的显示样式*/
+        #page_goto span{
+            padding: 6px 4px;
+        }
+        #page_goto input{
+            border: teal;
+            padding: 0;
+            width: 2em;
+            text-align: center;
+        }
+    </style>
+
+</body>
+
+</html>
