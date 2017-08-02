@@ -1,229 +1,73 @@
 {% extends 'base.html' %}
 
-<body>
-    <div class="container">
-		<!--博客-->
-		<div class="col-md-9 col-xs-12">
-            {% block article_list %}
-			<!-- 文章列表 -->
-			{% for article in article_list %}
-			<div class="blog-border">
-				<div class="blog-item">
-					<div class="blog-title">
-                        <a id="article_title", href="/blog/{{ article.id }}">{{ article.title}}</a>
-                    </div>
-					<div class="blog_descipt">{{ article.excerpt }}...</div>
-					<div class="blog-tags">
-						<ul>
-                            <!--{# 导入阅读器标签 #}-->
-                            {% load view_num %}
-                            {% get_view_nums for article as view_num %}
-                            <li><i class="fa fa-clock-o"></i> {{ article.created_time | date:"Y-m-d" }}</li>
-                            <li><i class="fa fa-eye"></i> {{ view_num }}浏览</li>
-							<li><a href="/tools/likes_change?type=article&id={{article.id}}"><i class="fa fa-heart-o"></i> {{ like_nums }}喜欢</a></li>
-                            <li><a href="#"><i class="fa fa-comments-o"></i> {{ article.comment_num }}评论</a></li>
-							<li><a href="#"><i class="fa fa-tags"></i> {{ article.category }}</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-            <!--分页功能-->
-            <div class="blog_list_footer">
-                <span class="blog_footer_tip">共{{pages.count}}篇博文。当前第{{article_list.number}}页，共{{pages.num_pages}}页</span>
-                <div class="blog-pages">
-                    <ul class="pagination">
-                        <li>
-                            <a href="?page=
+
+{% block article_list %}
+<!-- 文章列表 -->
+{% for article in article_list %}
+<div class="blog-border">
+    <div class="blog-item">
+        <div class="blog-title">
+            <a id="article_title", href="/blog/{{ article.id }}">{{ article.title}}</a>
+        </div>
+        <div class="blog_descipt">{{ article.excerpt }}...</div>
+        <div class="blog-tags">
+            <ul>
+                <!--{# 导入阅读器标签 #}-->
+                {% load view_num %}
+                {% get_view_nums for article as view_num %}
+                <li><i class="fa fa-clock-o"></i> {{ article.created_time | date:"Y-m-d" }}</li>
+                <li><i class="fa fa-eye"></i> {{ view_num }}浏览</li>
+                <li><a href="/tools/likes_change?type=article&id={{article.id}}"><i class="fa fa-heart-o"></i> {{ like_nums }}喜欢</a></li>
+                <li><a href="#"><i class="fa fa-comments-o"></i> {{ article.comment_num }}评论</a></li>
+                <li><a href="#"><i class="fa fa-tags"></i> {{ article.category }}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<!--分页功能-->
+<div class="blog_list_footer">
+    <span class="blog_footer_tip">共{{pages.count}}篇博文。当前第{{article_list.number}}页，共{{pages.num_pages}}页</span>
+    <div class="blog-pages">
+        <ul class="pagination">
+            <li>
+                <a href="?page=
                               {% if article_list.has_previous %}
                               {{article_list.previous_page_number}}
                               {% else %}
                               {{article_list.number}}
                               {% endif %}" aria-label="Previous"><span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
+                </a>
+            </li>
 
-                        {% for page in pages.page_range_ex %}
-                        {% if page == '...' %}
-                        <li><span>...</span></li>
-                        {% else %}
-                        <li><a href="?page={{page}}">{{page}}</a></li>
-                        {% endif %}
-                        {% endfor %}
+            {% for page in pages.page_range_ex %}
+            {% if page == '...' %}
+            <li><span>...</span></li>
+            {% else %}
+            <li><a href="?page={{page}}">{{page}}</a></li>
+            {% endif %}
+            {% endfor %}
 
-                        <li>
-                            <a href="?page=
+            <li>
+                <a href="?page=
                               {% if article_list.has_next %}
                               {{article_list.next_page_number}}
                               {% else %}
                               {{article_list.number}}
                               {% endif %}
                               "aria-label="Next"><span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                    {# 页码跳转的html代码 #}
-                    <ul class="pagination">
-                        <li id="page_goto">
+                </a>
+            </li>
+        </ul>
+        {# 页码跳转的html代码 #}
+        <ul class="pagination">
+            <li id="page_goto">
                             <span>
                                 <input type="text" value="{{paginator.page_goto}}" placeholder="{{article_list.number}}">
                             </span>
-                        </li>
-                        <li><a href="javascript:void(0);" onClick="page_goto();">Go</a></li>
-                    </ul>
-                </div>
-            </div>
-            {% endblock article_list %}
-		</div>
-
-		<!-- 右边推荐栏 -->
-		<div class="col-md-3 col-xs-12 blog-border">
-			<div class="side-list">
-                <h4>
-                    <i class="fa fa-book"></i> 随机推荐
-                </h4>
-                <ul>
-                    {% for article in rand_articles %}
-                    <li>
-                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="side-list">
-                <h4>
-                    <i class="fa fa-recycle"></i> 猜你喜欢
-                </h4>
-                <ul>
-                    {% for article in rand_articles %}
-                    <li>
-                        <a href="/blog/{{ article.id }}">{{article.title}}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-		</div>
+            </li>
+            <li><a href="javascript:void(0);" onClick="page_goto();">Go</a></li>
+        </ul>
     </div>
-
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-
-    <!-- Tether -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-
-    <!-- Bootstrap 4 JavaScript. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
-
-    <!-- Initialize Bootstrap functionality -->
-    <script>
-        // Initialize tooltip component
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        // Initialize popover component
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-    </script>
-    
-	<!-- Placeholder Images -->
-	<script src="/static/js/holder.min.js"></script>
-	<!--窗口和滚动样式-->
-    <script type="text/javascript">
-        $(function(){
-            //滚动事件
-            $(window).scroll(function(){
-                var top=$(window).scrollTop();
-                var navbar = $(".navbar-fixed-top");
-
-                if(top==0){
-                    $(".navbar-fixed-top").removeClass("navbar-down");
-                }else{
-                    $(".navbar-fixed-top").addClass("navbar-down");
-                }
-
-                if(top>350){
-                    $("#scrolltop").fadeIn();
-                }else{
-                    $("#scrolltop").fadeOut();
-                }
-            });
-
-            //点击返回头部效果
-            $("#scrolltop").click(function(){
-                $("html,body").animate({scrollTop:0});
-            });
-
-            //窗体改变大小事件
-            $(window).resize(function(){
-                //正文高度
-                var body_height = $(document.body).outerHeight(true);
-
-                //底部元素高度
-                var bottom_height = $("#footer").outerHeight(true);
-
-                //浏览器页面高度
-                var window_height = $(window).height();
-
-                //判断并调整底部元素的样式
-                if($("#footer").hasClass('page-bottom-abs')){
-                    if(body_height + bottom_height >= window_height){
-                        $("#footer").removeClass('page-bottom-abs');
-                    }
-                }else{
-                    if(body_height < window_height){
-                        $("#footer").addClass('page-bottom-abs');
-                    }
-                }
-            });
-
-            //页面加载时，模拟触发一下resize事件
-            $(window).trigger('resize');
-
-            //检查登录状态和获取公告
-            var user_menu = '<li><a href="/user/user_page">登录</a></li>';
-            $.ajax({
-                type:"GET",
-                url:"/user/check_is_login",
-                cache:false,
-                dataType:'json',
-                success:function(data){
-                    var notice;
-                    if(data['code']=='0'){
-                        user_menu = data['user_menu'];
-                        notice = data['notice'];
-                    }else{
-
-                        notice='暂无公告';
-                    };
-
-                    //$("#user_part").html(user_menu);
-                    $('.myRewards-text').html(notice);
-                    tctipConfig.list.notice.text=notice;
-                },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
-                    $("#user_part").html(user_menu);
-                }
-            });
-        });
-    </script>
-    <!--页码显示-->
-    <script type="text/javascript">
-        //设置凸显当前页码
-        $(".pagination li a").each(function(){
-            if($(this).text()=="{{ article_list.number }}"){
-                $(this).parent().addClass("active");
-            }
-        });
-        //页码跳转处理
-        function page_goto(page){
-            var page = $("#page_goto input")[0].value;
-            window.location.href = '?page=' + page;  //重定向
-            return false;
-        }
-    </script>
-
-</body>
-
-</html>
+</div>
+{% endblock article_list %}

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Template by Quackit.com -->
-<html lang="en">
+<html lang="zh-cmn-Hans">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,20 +61,16 @@
                     <a class="a-tag" href="/"><i class="fa fa-home"></i> 首页</a>
                 </li>
                 <li>
-					<a href="#" class="a-tag"><i class="fa fa-chrome"></i> 网站建设</a>
+					<a href="#" class="a-tag"><i class="fa fa-pencil-square-o"></i> 博客</a>
                 </li>
                 <li>
-					<a href="#" class="a-tag"><i class="fa fa-"></i> Python</a>
+					<a href="#" class="a-tag"><i class="fa fa-book"></i> 学习资料</a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="a-tag dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa"></i>Services
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">Engage</a>
-                        <a class="dropdown-item" href="#">Pontificate</a>
-                        <a class="dropdown-item" href="#">Synergize</a>
-                    </div>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-key"></i> 留言</a>
+                </li>
+                <li>
+					<a href="#" class="a-tag"><i class="fa fa-bell-o" aria-hidden="true"></i> 消息</a>
                 </li>
             </ul>
 
@@ -93,6 +89,7 @@
 			</ul>
         </div>
     </div>
+
     {% block user %}
     <div class="container">
         {% block article_content %}
@@ -301,6 +298,134 @@
             text-align: center;
         }
     </style>
+    <!--登录注册页面样式-->
+    <style type="text/css">
+	.head_text{
+		text-align: center;
+		margin: 2em auto;
+	}
+	.main_form{
+		margin: 0 auto;
+		width: 300px;
+		border: 2px #aaa dashed;
+		padding: 1.5em 0em 0em 1.5em;
+	}
+	.main_form a{
+		text-decoration: none;
+	}
+	.other_account{
+		font-weight: bolder;
+	}
+	.account_list{
+		margin-top: 0.5em;
+	}
+	.form_buttons{
+		margin-top: 2em;
+		float: left;
+	}
+</style>
+    <!--前端登录注册ajax请求-->
+    <script type="text/javascript">
+    $(function(){
+        //登录
+        $('#user_form').submit(function(){
+            //验证
+            var tip=$('#tip_text');
+            tip.text('');
+
+            if($('#user_name').val()==''){
+                tip.text('请输入邮箱');
+                return false;
+            };
+            if($('#user_pwd').val()==''){
+                tip.text('请输入密码');
+                return false;
+            };
+
+            //登录
+            $.ajax({
+                type: "POST",
+                data: $('#user_form').serialize(), //$.param(data),
+                url: "{% url 'user_login' %}",
+                cache: false,
+                dataType: "json",
+                success: function(json, textStatus){
+                    var is_success = json['success'];
+                    if(is_success){
+                        tip.text('登录成功，页面处理中...');
+
+                        //跳转回原来的页面
+                        var reback_url = $('#reback_url').val();
+                        if(!reback_url){reback_url='/';}
+                        window.location.href = reback_url;
+                    }else{
+                        tip.text('邮箱或者密码错误，请重试');
+                    };
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    tip.text("登录出错，请重试 "+errorThrown);
+                }
+            });
+            return false;
+        });
+
+        //注册
+        $('#user_register').click(function(){
+            //验证
+            var tip=$('#tip_text');
+            tip.text('');
+
+            var reg_name=$('#user_name').val();
+            var reg_pwd=$('#user_pwd').val();
+
+            if(reg_name==''){
+                tip.text('邮箱不能为空');
+                return false;
+            };
+            if(!reg_name.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)){
+                tip.text('请输入正确的邮箱格式');
+                return false;
+            }
+
+            if(reg_pwd==''){
+                tip.text('密码不能为空');
+                return false    ;
+            };
+            if(reg_pwd.length<6){
+                tip.text('密码不能少于6位');
+            }
+
+            //注册
+            tip.text('注册中，请稍后...');
+            $.ajax({
+                type: "POST",
+                data:$('#user_form').serialize(), // $.param(data),
+                url: "{% url 'user_register' %}",
+                cache: false,
+                dataType: "json",
+                success: function(json, textStatus){
+                    var is_success = json['success'];
+                    if(is_success){
+                        tip.text('注册成功，页面处理中...');
+                        $('#user_control').text(json['message']);
+
+                        window.setTimeout(function(){
+                            var reback_url = $('#reback_url').val();
+                            if(!reback_url){reback_url='/';}
+                            window.location.href = reback_url;
+                        },3000);
+                    }else{
+                        tip.text(json['message']);
+                    };
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    tip.text("注册出错，请重试 "+errorThrown);
+                }
+            });
+            return false;
+        });
+    });
+</script>
 
 </body>
 

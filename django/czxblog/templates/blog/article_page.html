@@ -4,37 +4,35 @@
     <title>{{ article.title }}</title>
 {% endblock title %}
 
-<body>
-    <div class="container">
-		{% block article_content %}
-		<!-- 文章列表 -->
-		<div class="col-md-9 col-xs-12">
-			<!-- 文章详细信息展示 -->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<div class="blog_header">
-						<h3>{{article.title}}</h3>
-					</div>
-					<ul class="list-inline">
-						<li class="list-inline-item">发布时间：{{ article.created_time | date:"Y-m-d H:i:s" }}</li>
-						<li class="list-inline-item">作者：{{ article.author }}</li>
-					</ul>
-					<span class="clearfix"></span>
-					<ul class="list-inline">
-						<!--{# 导入阅读器标签 #}-->
-						{% load view_num %}
-						{% get_view_nums for article as view_num %}
-						<li class="list-inline-item">分类标签：{{ article.category }}</li>
-						<li class="list-inline-item">浏览({{ view_num }})</li>
-						<li class="list-inline-item">评论({{ article.comment_num }})</li>
-					</ul>
-				</div>
-				<div class="panel-body">
-					<div class="blog_content">
-						<p>{{ content | safe }}</p>
-					</div>
-					<!--上下篇文章推荐，前端参照http://cuiqingcai.com/-->
-					<nav class="article-pre-next">
+{% block article_content %}
+<!-- 文章具体内容 -->
+<div class="col-md-9 col-xs-12">
+	<!-- 文章详细信息展示 -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="blog_header">
+				<h3>{{article.title}}</h3>
+			</div>
+			<ul class="list-inline">
+				<li class="list-inline-item">发布时间：{{ article.created_time | date:"Y-m-d H:i:s" }}</li>
+				<li class="list-inline-item">作者：{{ article.author }}</li>
+			</ul>
+			<span class="clearfix"></span>
+			<ul class="list-inline">
+				<!--{# 导入阅读器标签 #}-->
+				{% load view_num %}
+				{% get_view_nums for article as view_num %}
+				<li class="list-inline-item">分类标签：{{ article.category }}</li>
+				<li class="list-inline-item">浏览({{ view_num }})</li>
+				<li class="list-inline-item">评论({{ article.comment_num }})</li>
+			</ul>
+		</div>
+		<div class="panel-body">
+			<div class="blog_content">
+				<p>{{ content | safe }}</p>
+			</div>
+			<!--上下篇文章推荐，前端参照http://cuiqingcai.com/-->
+			<nav class="article-pre-next">
 						<span class="article-pre">
 							{% if pre_article %}
 							<i class="fa fa-angle-double-left"></i>
@@ -43,7 +41,7 @@
 							上一篇：没有了
 							{% endif %}
 						</span>
-						<span class="article-next">
+				<span class="article-next">
 							{% if next_article %}
 							<a href="/blog/{{ next_article.id }}"><i class="fa "></i> 下一篇：{{ next_article.title }}</a>
 							<i class="fa fa-angle-double-right"></i>
@@ -51,298 +49,188 @@
 							下一篇：没有了
 							{% endif %}
 						</span>
-					</nav>
-				</div>
-			</div>
-			<!--评论框-->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 id="comment_title">评论：</h4>
-					<button id="reply_cancel" class="btn btn-warning comment_title_btn" style="display: none">取消回复</button>
-					<p id="reply_text_pre" style="display: none"></p>
-				</div>
-				<div class="panel-body">
-					<div class="comment_nav">
-						<form class="form-horizontal" action="/blog/comments/post/" method="post" id="comment_form">
-							<input type="hidden" name="csrfmiddlewaretoken" value="8B2m1lt0TNnUYqG0KXa0v3mk7TGTYcbi">
-							<input id="id_object_pk" name="object_pk" type="hidden" value="12">
-							<input id="id_content_type" name="content_type" type="hidden" value="blog.blog">
-							<input id="id_timestamp" name="timestamp" type="hidden" value="1500731766">
-							<input id="id_security_hash" maxlength="40" name="security_hash" type="hidden" value="fc17a84fca2acfefc84cf09efd00c6e19d28a694">
-							<input type="hidden" name="next" value="/blog/12">
-							<input type="hidden" name="src_url" value="http://yshblog.com/blog/12">
-							<input id="reply_to" type="hidden" name="reply_to" value="0">
-							<input id="root_id" type="hidden" name="root_id" value="0">
-							<input id="reply_name" type="hidden" name="reply_name" value="">
-							<div class="row">
-								<div class="col-md-12">
-									<textarea class="input-xlarge comment_text" id="id_comment" name="comment" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" style="display: none;"></textarea>
-									<div class="input-xlarge comment_text emojionearea" role="application">
-										<div class="emojionearea-editor" contenteditable="true" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" tabindex="0" dir="ltr" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
-										<div class="emojionearea-filters">
-											<div class="emojionearea-filters-scroll" style="left: 0px;">
-												<i class="emojionearea-filter" data-filter="people">
-													<i class="emojione-1f60b"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="nature">
-													<i class="emojione-1f433"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="food_drink">
-													<i class="emojione-1f352"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="celebration">
-													<i class="emojione-1f389"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="activity">
-													<i class="emojione-1f3c6"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="travel">
-													<i class="emojione-1f680"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="objects_symbols">
-													<i class="emojione-1f587"></i>
-												</i>
-												<i class="emojionearea-filter" data-filter="flags">
-													<i class="emojione-1f6a9"></i>
-												</i>
-											</div>
-											<i class="emojionearea-filter-arrow-left"></i>
-											<i class="emojionearea-filter-arrow-right active"></i>
-										</div>
-										<div class="emojionearea-tabs ea-hidden">
-											<div class="emojionearea-tab emojionearea-tab-people ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-nature ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-food_drink ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-celebration ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-activity ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-travel ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-objects_symbols ea-hidden"></div>
-											<div class="emojionearea-tab emojionearea-tab-flags ea-hidden"></div>
-										</div>
+			</nav>
+		</div>
+	</div>
+	<!--评论框-->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 id="comment_title">评论：</h4>
+			<button id="reply_cancel" class="btn btn-warning comment_title_btn" style="display: none">取消回复</button>
+			<p id="reply_text_pre" style="display: none"></p>
+		</div>
+		<div class="panel-body">
+			<div class="comment_nav">
+				<form class="form-horizontal" action="/blog/comments/post/" method="post" id="comment_form">
+					<input type="hidden" name="csrfmiddlewaretoken" value="8B2m1lt0TNnUYqG0KXa0v3mk7TGTYcbi">
+					<input id="id_object_pk" name="object_pk" type="hidden" value="12">
+					<input id="id_content_type" name="content_type" type="hidden" value="blog.blog">
+					<input id="id_timestamp" name="timestamp" type="hidden" value="1500731766">
+					<input id="id_security_hash" maxlength="40" name="security_hash" type="hidden" value="fc17a84fca2acfefc84cf09efd00c6e19d28a694">
+					<input type="hidden" name="next" value="/blog/12">
+					<input type="hidden" name="src_url" value="http://yshblog.com/blog/12">
+					<input id="reply_to" type="hidden" name="reply_to" value="0">
+					<input id="root_id" type="hidden" name="root_id" value="0">
+					<input id="reply_name" type="hidden" name="reply_name" value="">
+					<div class="row">
+						<div class="col-md-12">
+							<textarea class="input-xlarge comment_text" id="id_comment" name="comment" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" style="display: none;"></textarea>
+							<div class="input-xlarge comment_text emojionearea" role="application">
+								<div class="emojionearea-editor" contenteditable="true" placeholder="为了防止垃圾评论，需要登录，才能评论哦~" tabindex="0" dir="ltr" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></div>
+								<div class="emojionearea-filters">
+									<div class="emojionearea-filters-scroll" style="left: 0px;">
+										<i class="emojionearea-filter" data-filter="people">
+											<i class="emojione-1f60b"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="nature">
+											<i class="emojione-1f433"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="food_drink">
+											<i class="emojione-1f352"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="celebration">
+											<i class="emojione-1f389"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="activity">
+											<i class="emojione-1f3c6"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="travel">
+											<i class="emojione-1f680"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="objects_symbols">
+											<i class="emojione-1f587"></i>
+										</i>
+										<i class="emojionearea-filter" data-filter="flags">
+											<i class="emojione-1f6a9"></i>
+										</i>
 									</div>
-
-									<!--如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论-->
-									<input type="text" style="display:none;" id="id_honeypot" name="honeypot">
+									<i class="emojionearea-filter-arrow-left"></i>
+									<i class="emojionearea-filter-arrow-right active"></i>
+								</div>
+								<div class="emojionearea-tabs ea-hidden">
+									<div class="emojionearea-tab emojionearea-tab-people ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-nature ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-food_drink ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-celebration ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-activity ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-travel ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-objects_symbols ea-hidden"></div>
+									<div class="emojionearea-tab emojionearea-tab-flags ea-hidden"></div>
 								</div>
 							</div>
 
-							<div class="row">
-								<div class="form-actions comment_button">
-									<span id="tip_text"></span>
-									<input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交">
-									<botton class="btn btn-default" id="reset_btn">清空</botton>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!--评论列表-->
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4>最新评论</h4>
-					<button id="jump_to_comment" class="btn btn-info comment_title_btn">我要评论</button>
-				</div>
-				<div id="comments_list" class="panel-body">
-                    {% for comment in comments %}
-					<div class="blog_comment" name="F{{comment.id}}">
-						<div class="comment_user">
-							<img class="user_avatar" src="/{{comment.user.get_avatar_url}}" alt="{{comment.user_name}}">
-							<p class="uesr_name">{{comment.user_name}}</p>
+							<!--如果你在该字段中输入任何内容，你的评论就会被视为垃圾评论-->
+							<input type="text" style="display:none;" id="id_honeypot" name="honeypot">
 						</div>
+					</div>
 
-						<div class="comment_body">
-							<div class="comment_content">
-								<p>{{ comment.comment }}</p>
-							</div>
+					<div class="row">
+						<div class="form-actions comment_button">
+							<span id="tip_text"></span>
+							<input class="btn btn-info" id="submit_btn" type="submit" name="submit" value="提交">
+							<botton class="btn btn-default" id="reset_btn">清空</botton>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--评论列表-->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>最新评论</h4>
+			<button id="jump_to_comment" class="btn btn-info comment_title_btn">我要评论</button>
+		</div>
+		<div id="comments_list" class="panel-body">
+			{% for comment in comments %}
+			<div class="blog_comment" name="F{{comment.id}}">
+				<div class="comment_user">
+					<img class="user_avatar" src="/{{comment.user.get_avatar_url}}" alt="{{comment.user_name}}">
+					<p class="uesr_name">{{comment.user_name}}</p>
+				</div>
 
-							<p class="comment_bottom">
-								<span>{{comment.submit_date|date:"Y-m-d H:i"}}</span>
-								<span class='reply_button'>
+				<div class="comment_body">
+					<div class="comment_content">
+						<p>{{ comment.comment }}</p>
+					</div>
+
+					<p class="comment_bottom">
+						<span>{{comment.submit_date|date:"Y-m-d H:i"}}</span>
+						<span class='reply_button'>
                                     <a href='javascript:void(0);' onclick='reply_click(this);' root='{{comment.id}}' role='{{comment.id}}' base='{{comment.user_name}}'>回复</a>
                                 </span>
-							</p>
+					</p>
 
-							{% if comment.replies%}
-							<ul class="comment_reply">
-								{% for reply in comment.replies %}
-								<li name='F{{reply.id}}'>
-									<img class="reply_avatar" src="/{{reply.user.get_avatar_url}}">
+					{% if comment.replies%}
+					<ul class="comment_reply">
+						{% for reply in comment.replies %}
+						<li name='F{{reply.id}}'>
+							<img class="reply_avatar" src="/{{reply.user.get_avatar_url}}">
 
-									<div class="reply_body">
-										<p>
-											{#判断是否回复评论#}
-											{% ifequal comment.id reply.reply_to %}
-											<span class="reply_name">{{reply.user_name}}</span>
-											{% else %}
-											<span class="reply_name">{{reply.user_name}}</span>
-											<span> 回复 </span>
-											<span class="reply_name">{{reply.reply_name}}</span>
-											{% endifequal %}
-										</p>
+							<div class="reply_body">
+								<p>
+									{#判断是否回复评论#}
+									{% ifequal comment.id reply.reply_to %}
+									<span class="reply_name">{{reply.user_name}}</span>
+									{% else %}
+									<span class="reply_name">{{reply.user_name}}</span>
+									<span> 回复 </span>
+									<span class="reply_name">{{reply.reply_name}}</span>
+									{% endifequal %}
+								</p>
 
-										<div class="reply_content">
-											<p>{{reply.comment}}</p>
-										</div>
+								<div class="reply_content">
+									<p>{{reply.comment}}</p>
+								</div>
 
-										<p class="comment_bottom">
-											<span>{{reply.submit_date|date:"Y-m-d H:i"}}</span>
-											<span class='reply_button'>
+								<p class="comment_bottom">
+									<span>{{reply.submit_date|date:"Y-m-d H:i"}}</span>
+									<span class='reply_button'>
                                                 <a href='javascript:void(0);' onclick='reply_click(this);' root='{{reply.root_id}}' role='{{reply.id}}' base='{{reply.user_name}}'>回复</a>
 											</span>
-										</p>
-									</div>
-								</li>
-								{% endfor %}
-							</ul>
-							{% endif %}
-                        </div>
-						<span class="clearfix"></span>
-                    </div>
-                {% empty %}
-					智慧如你，不想发表一下意见吗？
-                {% endfor %}
+								</p>
+							</div>
+						</li>
+						{% endfor %}
+					</ul>
+					{% endif %}
 				</div>
-		    </div>
-		</div><!--/Center Column-->
-
-		<!-- 右边推荐栏 -->
-		<div class="col-md-3 col-xs-12 blog-border">
-			<div class="side-list">
-				<h4>
-					<i class="fa fa-book"></i> 随机推荐
-				</h4>
-				<ul>
-					{% for article in rand_articles %}
-					<li>
-						<a href="/blog/{{ article.id }}">{{article.title}}</a>
-					</li>
-					{% endfor %}
-				</ul>
+				<span class="clearfix"></span>
 			</div>
-			<div class="side-list">
-				<h4>
-					<i class="fa fa-recycle"></i> 猜你喜欢
-				</h4>
-				<ul>
-					{% for article in rand_articles %}
-					<li>
-						<a href="/blog/{{ article.id }}">{{article.title}}</a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div><!--右边推荐栏-->
-		{% endblock article_content %}
-	</div><!--/container-->
+			{% empty %}
+			智慧如你，不想发表一下意见吗？
+			{% endfor %}
+		</div>
+	</div>
+</div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+<!-- 右边推荐栏 -->
+<div class="col-md-3 col-xs-12 blog-border">
+	<div class="side-list">
+		<h4>
+			<i class="fa fa-book"></i> 随机推荐
+		</h4>
+		<ul>
+			{% for article in rand_articles %}
+			<li>
+				<a href="/blog/{{ article.id }}">{{article.title}}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="side-list">
+		<h4>
+			<i class="fa fa-recycle"></i> 猜你喜欢
+		</h4>
+		<ul>
+			{% for article in rand_articles %}
+			<li>
+				<a href="/blog/{{ article.id }}">{{article.title}}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div><!--右边推荐栏-->
+{% endblock article_content %}
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
 
-    <!-- Tether -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-
-    <!-- Bootstrap 4 JavaScript. This is for the alpha 3 release of Bootstrap 4. This should be updated when Bootstrap 4 is officially released. -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
-
-    <!-- Initialize Bootstrap functionality -->
-    <script>
-        // Initialize tooltip component
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-
-        // Initialize popover component
-        $(function () {
-            $('[data-toggle="popover"]').popover()
-        })
-    </script> 
-    
-	<!-- Placeholder Images -->
-    <!--<script src="/static/js/holder.min.js"></script>-->
-    <script type="text/javascript">
-        $(function(){
-            //滚动事件
-            $(window).scroll(function(){
-                var top=$(window).scrollTop();
-                var navbar = $(".navbar-fixed-top");
-
-                if(top==0){
-                    $(".navbar-fixed-top").removeClass("navbar-down");
-                }else{
-                    $(".navbar-fixed-top").addClass("navbar-down");
-                }
-
-                if(top>350){
-                    $("#scrolltop").fadeIn();
-                }else{
-                    $("#scrolltop").fadeOut();
-                }
-            });
-
-            //点击返回头部效果
-            $("#scrolltop").click(function(){
-                $("html,body").animate({scrollTop:0});
-            });
-
-            //窗体改变大小事件
-            $(window).resize(function(){
-                //正文高度
-                var body_height = $(document.body).outerHeight(true);
-
-                //底部元素高度
-                var bottom_height = $("#footer").outerHeight(true);
-
-                //浏览器页面高度
-                var window_height = $(window).height();
-
-                //判断并调整底部元素的样式
-                if($("#footer").hasClass('page-bottom-abs')){
-                    if(body_height + bottom_height >= window_height){
-                        $("#footer").removeClass('page-bottom-abs');
-                    }
-                }else{
-                    if(body_height < window_height){
-                        $("#footer").addClass('page-bottom-abs');
-                    }
-                }
-            });
-
-            //页面加载时，模拟触发一下resize事件
-            $(window).trigger('resize');
-
-            //检查登录状态和获取公告
-            var user_menu = '<li><a href="/user/user_page">登录</a></li>';
-            $.ajax({
-                type:"GET",
-                url:"/user/check_is_login",
-                cache:false,
-                dataType:'json',
-                success:function(data){
-                    var notice;
-                    if(data['code']=='0'){
-                        user_menu = data['user_menu'];
-                        notice = data['notice'];
-                    }else{
-
-                        notice='暂无公告';
-                    };
-
-                    //$("#user_part").html(user_menu);
-                    $('.myRewards-text').html(notice);
-                    tctipConfig.list.notice.text=notice;
-                },
-                error:function(XMLHttpRequest, textStatus, errorThrown){
-                    $("#user_part").html(user_menu);
-                }
-            });
-        });
-    </script>
-
-</body>
-
-</html>
