@@ -1,6 +1,9 @@
-body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6,p,a,div { 
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6,p,div {
     font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
 }
+
+/*顶栏*/
+.a-tag{font-size: 18px; color: floralwhite}
 
 ul,ol{ list-style-type:none;}
 ul,ol,li{ padding:0;margin:0;}
@@ -40,7 +43,7 @@ pre{
     .navbar-default{padding-right: 20px;}
 }
 
-/*é¡µå°¾*/
+/*底部信息和copyright*/
 .page-bottom{ width:100%; clear:both; background: #e7e7e7; margin-top: 2.5em; padding: 1em 0 0; color: #777;}
 .page-bottom-abs{ position:absolute; bottom:0;}
 .page-bottom .title{ color: #424242; font-weight: bold; border-bottom: 1px solid #aaa; padding-bottom: 7px; margin-bottom: 1em; margin-top: 1em;}

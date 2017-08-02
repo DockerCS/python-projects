@@ -1,27 +1,26 @@
 .blog-border{ border: 1px #ccc solid; border-radius: 6px;}
 
-/*åšæ–‡åˆ—è¡¨*/
+/*博客详情页*/
 .blog-item{ clear:both; border-bottom: 1px solid #ddd; padding: 1.5em 1em 0.8em 1.5em;  overflow: hidden;}
 .blog-title{ margin-bottom: 0.5em; font-size: 120%; font-weight: bold;}
 .blog_descipt{ color: #777; font-size: 90%; line-height: 1.6;}
 .blog-tags{ font-size: 80%; color: #75878a; margin-top: 0.5em; display: inline-block; border-top: 1px #ddd solid;}
 .blog-tags li{ float: left;  padding-top: 0.5em; margin-right: 1.1em;}
 
-.tag-recommend, .tag-recommend a{ color:#c93756;}
-
-/*é€‰æ‹©å™¨*/
+/*筛选框*/
 .filter{ overflow:hidden; margin-bottom: 1em; padding: 1em 0 0.5em 1em;}
-
-/*ç­›é€‰å™¨*/
 .filter-item{ border-bottom: 1px #ddd dashed; padding-bottom: 0.5em;}
 
-/*æ ‡ç­¾åˆ—è¡¨*/
-.tag-list{ font-size: 90%;}
-.tag-list li{ float: left; margin-right: 1em;}
-.tag-list label{ font-weight: 100; cursor: pointer;}
-.tag-list .tag-recommend label{ font-weight: 700; color: #c93756;}
+.tag-list{ font-size: 110%;}
+.tag-list ul{ padding: 18px 0 8px;}
+.tag-list li{ float: left; margin: 0 10px 10px 0; list-style: none;}
+.tag-list a{ display: block;
+                padding: 0 10px;
+                border-radius: 30px;
+                text-decoration: none;
+                border: 1px solid #daecf5;}
 
-/*é¡µç */
+/*返回顶部*/
 #page_goto span{ padding: 6px 4px;}
 #page_goto input{ border: none; padding: 0; width: 2em; text-align: center;}
 
