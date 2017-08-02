@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from .views import index, article
+from . import views
 
 urlpatterns = [
-    url(r'^$', index),
-    url(r'^(?P<article_id>[0-9]+)/$', article)
-
+    # url(r'^$', views.),
+    url(r'^(?P<id>[0-9]+)/$', views.article_detail_show),  # id为文章模型Article的主键，?P<id>[0-9]+用来传递前端的参数id到后端。
+    # url(r'^category/$', views.blog_catergory),
+    url(r'^category/(?P<category_id>[0-9]+)$', views.blog_catergory)
 ]
